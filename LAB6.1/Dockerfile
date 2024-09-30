@@ -6,7 +6,7 @@ RUN apt-get update && \
 RUN mkdir -p /opt/webapp
 COPY . /opt/webapp/
 COPY requirements.txt /tmp/
-RUN pip install -r /tmp/requirements.txt
+RUN pip install -qr /tmp/requirements.txt
 WORKDIR /opt/webapp
 EXPOSE 5000
 ENTRYPOINT ["python", "app.py"]
