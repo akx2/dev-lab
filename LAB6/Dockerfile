@@ -23,17 +23,18 @@ RUN curl -jkSL -o /tmp/apache-tomcat.tar.gz https://dlcdn.apache.org/tomcat/tomc
 RUN apk add git --no-cache && \
     apk add maven && \
     rm -rf /tmp/* /var/cache/apk/*
-# cleanup
 
-
-WORKDIR $CATALINA_HOME
-
-    RUN mkdir -p ./app && \
+RUN mkdir -p ./app && \
     cd ./app && \
     git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git &&  \
     cd ./boxfuse-sample-java-war-hello && \
     mvn package && \
-COPY ./catalina.sh  /app
+    cp ./boxfuse-sample-java-war-hello/target/*.war $CATALINA_HOME/webapps/
+
+WORKDIR $CATALINA_HOME
+
+    
+#COPY ./catalina.sh  /app
 EXPOSE 8080
 
 CMD [“catalina.sh”, “run”]
